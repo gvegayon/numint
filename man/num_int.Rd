@@ -49,6 +49,18 @@ This function performes numerical integration using monte carlo integration
 
 \deqn{}{}
 }
+\examples{
+# Simple example -------
+ans <- num_int(dnorm, mean = .5, a = -6, b = 7, N = 1e3)
+
+# Multiple proc -----
+\dontrun{
+
+ans <- num_int(dnorm, mean = .5, a = -6, b = 7, N = 1e8,
+ncores = 20)
+
+}
+}
 \references{
 Weisstein, Eric W. "Monte Carlo Integration." From MathWorld--A Wolfram Web Resource. \url{http://mathworld.wolfram.com/MonteCarloIntegration.html}
 }

@@ -32,6 +32,18 @@ splitN <- function(N, nchunks) {
 #' Weisstein, Eric W. "Monte Carlo Integration." From MathWorld--A Wolfram Web Resource. \url{http://mathworld.wolfram.com/MonteCarloIntegration.html}
 #' @family Numerical Methods
 #' @export
+#'
+#' @examples
+#' # Simple example -------
+#' ans <- num_int(dnorm, mean = .5, a = -6, b = 7, N = 1e3)
+#'
+#' # Multiple proc -----
+#' \dontrun{
+#'
+#' ans <- num_int(dnorm, mean = .5, a = -6, b = 7, N = 1e8,
+#' ncores = 20)
+#'
+#' }
 num_int <- function(fn, ..., a, b, N = 100, ncores = 1, cl = NULL) {
 
   # Getting the call

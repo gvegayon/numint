@@ -1,3 +1,5 @@
+[![Travis-CI Build Status](https://travis-ci.org/gvegayon/numint.svg?branch=master)](https://travis-ci.org/gvegayon/numint)
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 numint
 ======
