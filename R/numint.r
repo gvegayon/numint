@@ -7,14 +7,31 @@ splitN <- function(N, nchunks) {
   ans
 }
 
-# This function performes numerical integration using monte carlo integration
-# fn is a function
-# ... are further arguments to be passed to fn
-# a is the lower bound
-# b is the upper bound
-# N is the sample size
-# ncores is the number of processors to call
-# cl is an object of class cluster
+#' Monte Carlo Integration
+#'
+#' This function performes numerical integration using monte carlo integration
+#'
+#'
+#' @param fn A function
+#' @param ... Further arguments to be passed to -fn-
+#' @param a Numeric vector. Lower bound
+#' @param b Numeric vector. Upper bound
+#' @param N Integer scalar. Sample size
+#' @param ncores Integer scalar. Number of cores (parallel)
+#' @param cl An object of class cluster
+#'
+#' @details \code{code}, \emph{emph}, \pkg{igraph}, \CRANpkg{igraph}
+#' \eqn{\pi}{pi}
+#'
+#' \deqn{}{}
+#'
+#' @return An object of class
+#' @aliases NumInt
+#' @author George
+#' @references
+#' Weisstein, Eric W. "Monte Carlo Integration." From MathWorld--A Wolfram Web Resource. \url{http://mathworld.wolfram.com/MonteCarloIntegration.html}
+#' @family Numerical Methods
+#' @export
 num_int <- function(fn, ..., a, b, N = 100, ncores = 1, cl = NULL) {
 
   # Getting the call
@@ -30,12 +47,12 @@ num_int <- function(fn, ..., a, b, N = 100, ncores = 1, cl = NULL) {
 
   # Checking parallel
   if (!length(cl)) {
-    cl <- makeCluster(ncores)
+    cl <- parallel::makeCluster(ncores)
     toload <- loadedNamespaces()
-    invisible(clusterCall(cl, function(x) {
+    invisible(parallel::clusterCall(cl, function(x) {
       sapply(x, library, character.only = TRUE)
     }, x = toload))
-    on.exit(stopCluster(cl))
+    on.exit(parallel::stopCluster(cl))
   }
 
   # Sampling
@@ -51,7 +68,7 @@ num_int <- function(fn, ..., a, b, N = 100, ncores = 1, cl = NULL) {
   # Distributing indices across processors
   # idx     <- splitIndices(N, length(cl))
   # fsample <- parLapply(cl, lapply(idx, function(w) samp[w,,drop=FALSE]), f)
-  fsample <- parLapply(cl, splitN(N, length(cl)), function(n, a, b) {
+  fsample <- parallel::parLapply(cl, splitN(N, length(cl)), function(n, a, b) {
     samp <- Map(function(lb, ub) runif(n, lb, ub), lb = a, ub = b)
     samp <- do.call(cbind, samp)
     f(samp)
@@ -84,7 +101,17 @@ num_int <- function(fn, ..., a, b, N = 100, ncores = 1, cl = NULL) {
   )
 }
 
+#' @rdname num_int
+#' @export
+numint <- num_int
+
 # Plotting method
+#' @rdname num_int
+#' @param x An object of class numint
+#' @param y Ignored
+#' @param main Title
+#' @param col Color
+#' @export
 plot.numint <- function(x, y = NULL, main = "Monte Carlo Integration", col=blues9[4],...) {
 
   n <- 100
