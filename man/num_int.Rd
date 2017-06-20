@@ -5,6 +5,7 @@
 \alias{NumInt}
 \alias{numint}
 \alias{plot.numint}
+\alias{print.numint}
 \title{Monte Carlo Integration}
 \usage{
 num_int(fn, ..., a, b, N = 100, ncores = 1, cl = NULL)
@@ -13,6 +14,8 @@ numint(fn, ..., a, b, N = 100, ncores = 1, cl = NULL)
 
 \method{plot}{numint}(x, y = NULL, main = "Monte Carlo Integration",
   col = blues9[4], ...)
+
+\method{print}{numint}(x, ...)
 }
 \arguments{
 \item{fn}{A function}

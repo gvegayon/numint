@@ -172,6 +172,8 @@ plot.numint <- function(x, y = NULL, main = "Monte Carlo Integration", col=blues
 }
 
 # printing method
+#' @rdname num_int
+#' @export
 print.numint <- function(x, ...) {
   with(x, cat(sprintf("MONTE CARLO INTEGRATION\nN: %i\nVolume: %.4f\n", N, vol)))
   with(x, cat(sprintf("%.4f +- %.4f", val, sd)))
